@@ -105,5 +105,8 @@ public class ClinicServiceImpl implements ClinicService {
         return vetRepository.findAll();
     }
 
+    private void test() {
+        
+    }
 
 }
