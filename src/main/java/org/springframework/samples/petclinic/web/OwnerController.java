@@ -15,11 +15,6 @@
  */
 package org.springframework.samples.petclinic.web;
 
-import java.util.Collection;
-import java.util.Map;
-
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.service.ClinicService;
@@ -34,6 +29,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.validation.Valid;
+import java.util.Collection;
+import java.util.Map;
 
 /**
  * @author Juergen Hoeller
@@ -56,24 +55,6 @@ public class OwnerController {
     @InitBinder
     public void setAllowedFields(WebDataBinder dataBinder) {
         dataBinder.setDisallowedFields("id");
-    }
-
-    @RequestMapping(value = "/owners/new", method = RequestMethod.GET)
-    public String initCreationForm(Map<String, Object> model) {
-        Owner owner = new Owner();
-        model.put("owner", owner);
-        return "owners/createOrUpdateOwnerForm";
-    }
-
-    @RequestMapping(value = "/owners/new", method = RequestMethod.POST)
-    public String processCreationForm(@Valid Owner owner, BindingResult result, SessionStatus status) {
-        if (result.hasErrors()) {
-            return "owners/createOrUpdateOwnerForm";
-        } else {
-            this.clinicService.saveOwner(owner);
-            status.setComplete();
-            return "redirect:/owners/" + owner.getId();
-        }
     }
 
     @RequestMapping(value = "/owners/find", method = RequestMethod.GET)
